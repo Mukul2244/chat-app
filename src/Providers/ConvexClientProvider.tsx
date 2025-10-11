@@ -29,7 +29,7 @@ export default function ConvexClientProvider({
         <LoadingLogo />
       </AuthLoading>
       <Unauthenticated>
-        <div className="flex flex-col justify-center items-center h-screen">
+        <div className="flex flex-col justify-center items-center h-full">
           <SignIn routing="hash" />
         </div>
       </Unauthenticated>
