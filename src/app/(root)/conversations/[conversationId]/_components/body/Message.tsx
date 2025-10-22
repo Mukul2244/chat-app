@@ -39,7 +39,7 @@ const Message = ({
       >
         <div
           className={cn("px-4 py-2 rounded-lg max-w-[70%]", {
-            "bg-primary text-primary-foreground": fromCurrentUser,
+            "bg-primary text-gray-100 ": fromCurrentUser,
             "bg-secondary text-secondary-foreground": !fromCurrentUser,
             "rounded-br-none": !lastByUser && fromCurrentUser,
             "rounded-bl-none": !lastByUser && !fromCurrentUser,
@@ -52,7 +52,7 @@ const Message = ({
           ) : null}
           <p
             className={cn("text-xs flex w-full my-1", {
-              "justify-end text-primary-foreground": fromCurrentUser,
+              "justify-end text-gray-100": fromCurrentUser,
               "justify-start text-secondary-foreground": !fromCurrentUser,
             })}
           >

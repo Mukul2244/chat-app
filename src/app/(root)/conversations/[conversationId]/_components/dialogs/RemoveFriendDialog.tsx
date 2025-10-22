@@ -1,0 +1,45 @@
+import React, { Dispatch, SetStateAction } from "react";
+import { Id } from "../../../../../../../convex/_generated/dataModel";
+import { useMutationState } from "@/hooks/useMutationState";
+import { api } from "../../../../../../../convex/_generated/api";
+import { toast } from "sonner";
+import { ConvexError } from "convex/values";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+
+type Props = {
+  conversationId: Id<"conversations">;
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+const RemoveFriendDialog = ({ conversationId, open, setOpen }: Props) => {
+  const { mutate: removeFriend, pending } = useMutationState(api.friend.remove);
+  const handleRemoveFriend = async () => {
+    try {
+      removeFriend({ conversationId });
+      toast.success("Removed Friend");
+    } catch (error) {
+      toast.error(
+        error instanceof ConvexError ? error.data : "Something went wrong!!"
+      );
+    }
+  };
+  return (
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+          <AlertDialogDescription>This action cannot be undone.All messages will be deleted and you will not be able to message this user. All group chat will still work as normal.</AlertDialogDescription>
+        </AlertDialogHeader>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+export default RemoveFriendDialog;
