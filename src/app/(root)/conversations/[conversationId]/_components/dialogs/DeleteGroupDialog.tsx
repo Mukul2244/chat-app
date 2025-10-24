@@ -21,12 +21,14 @@ type Props = {
   setOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const RemoveFriendDialog = ({ conversationId, open, setOpen }: Props) => {
-  const { mutate: removeFriend, pending } = useMutationState(api.friend.remove);
-  const handleRemoveFriend = async () => {
+const DeleteGroupDialog = ({ conversationId, open, setOpen }: Props) => {
+  const { mutate: deleteGroup, pending } = useMutationState(
+    api.conversation.deleteGroup
+  );
+  const handleDeleteGroup = async () => {
     try {
-      removeFriend({ conversationId });
-      toast.success("Removed Friend");
+      deleteGroup({ conversationId });
+      toast.success("Group Deleted!");
     } catch (error) {
       toast.error(
         error instanceof ConvexError ? error.data : "Something went wrong!!"
@@ -40,13 +42,12 @@ const RemoveFriendDialog = ({ conversationId, open, setOpen }: Props) => {
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone.All messages will be deleted and you
-            will not be able to message this user. All group chat will still
-            work as normal.
+            will not be able to message this group.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={pending}>Cancel</AlertDialogCancel>
-          <AlertDialogAction disabled={pending} onClick={handleRemoveFriend}>
+          <AlertDialogAction disabled={pending} onClick={handleDeleteGroup}>
             Delete
           </AlertDialogAction>
         </AlertDialogFooter>
@@ -55,4 +56,4 @@ const RemoveFriendDialog = ({ conversationId, open, setOpen }: Props) => {
   );
 };
 
-export default RemoveFriendDialog;
+export default DeleteGroupDialog;

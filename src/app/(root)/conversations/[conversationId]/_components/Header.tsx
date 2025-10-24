@@ -37,7 +37,7 @@ const Header = ({ imageUrl, name, options }: Props) => {
       <div className="flex gap-2">
         {options ? (
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
               <Button size={"icon"} variant={"secondary"}>
                 <Settings />
               </Button>
@@ -50,7 +50,9 @@ const Header = ({ imageUrl, name, options }: Props) => {
                   className={cn("font-semibold", {
                     "text-destructive": option.destructive,
                   })}
-                ></DropdownMenuItem>
+                >
+                  {option.label}
+                </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
