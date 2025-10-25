@@ -25,7 +25,7 @@ const RemoveFriendDialog = ({ conversationId, open, setOpen }: Props) => {
   const { mutate: removeFriend, pending } = useMutationState(api.friend.remove);
   const handleRemoveFriend = async () => {
     try {
-      removeFriend({ conversationId });
+      removeFriend({ conversationId: conversationId as Id<"conversations"> });
       toast.success("Removed Friend");
     } catch (error) {
       toast.error(

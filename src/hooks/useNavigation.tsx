@@ -10,7 +10,7 @@ export const useNavigation = () => {
   const conversations = useQuery(api.conversations.get);
   const unseenMessagesCount = useMemo(() => {
     return conversations?.reduce((acc, conv) => acc + conv.unseenCount, 0);
-  }, []);
+  }, [conversations]);
 
   const paths = useMemo(
     () => [

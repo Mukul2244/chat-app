@@ -42,7 +42,7 @@ const Request = ({ id, imageUrl, username, email }: Props) => {
           size={"icon"}
           disabled={rejectPending || acceptPending}
           onClick={() =>
-            acceptRequest({ id })
+            acceptRequest({ id: id as Id<"requests"> })
               .then(() => {
                 toast.success("Friend request accepted!");
               })
@@ -61,7 +61,7 @@ const Request = ({ id, imageUrl, username, email }: Props) => {
           size={"icon"}
           disabled={rejectPending || acceptPending}
           onClick={() =>
-            rejectRequest({ id })
+            rejectRequest({ id: id as Id<"requests"> })
               .then(() => {
                 toast.success("Friend request rejected!");
               })

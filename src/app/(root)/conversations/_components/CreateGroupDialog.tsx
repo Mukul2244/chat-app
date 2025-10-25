@@ -37,16 +37,12 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
-import { Didact_Gothic } from "next/font/google";
+import { Id } from "../../../../../convex/_generated/dataModel";
 
-type Props = {};
 const createGroupFormSchema = z.object({
   name: z.string().min(1, { message: "This field can't be empty" }),
   members: z
@@ -55,7 +51,7 @@ const createGroupFormSchema = z.object({
     .min(1, { message: "You must select at least one member" }),
 });
 
-const CreateGroupDialog = (props: Props) => {
+const CreateGroupDialog = () => {
   const friends = useQuery(api.friends.get);
   const { mutate: createGroup, pending } = useMutationState(
     api.friends.createGroup
@@ -70,15 +66,18 @@ const CreateGroupDialog = (props: Props) => {
   const members = form.watch("members", []);
   const unselectedFriends = useMemo(() => {
     return friends
-      ? friends.filter((friend: any) => !members.includes(friend._id))
+      ? friends.filter((friend) => !members.includes(friend._id))
       : [];
-  }, [members.length, friends?.length]);
+  }, [members, friends]);
 
   const handleSubmit = async (
     values: z.infer<typeof createGroupFormSchema>
   ) => {
     try {
-      await createGroup(values);
+      await createGroup({
+        name: values.name,
+        members: values.members as Id<"users">[],
+      });
       form.reset();
       toast.success("Group created!");
     } catch (error) {

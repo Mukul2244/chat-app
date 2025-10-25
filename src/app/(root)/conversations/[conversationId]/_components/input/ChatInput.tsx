@@ -2,6 +2,7 @@
 import { Card } from "@/components/ui/card";
 import React from "react";
 import z from "zod";
+import { Id } from "../../../../../../../convex/_generated/dataModel";
 import { api } from "../../../../../../../convex/_generated/api";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,7 +30,7 @@ const ChatInput = () => {
   const { mutate: createMessage, pending } = useMutationState(
     api.message.create
   );
-  const textAreaRef = React.useRef<HTMLTextAreaElement | null>(null);
+  // const textAreaRef = React.useRef<HTMLTextAreaElement | null>(null);
 
   const form = useForm<z.infer<typeof chatMessageSchema>>({
     resolver: zodResolver(chatMessageSchema),
@@ -40,7 +41,7 @@ const ChatInput = () => {
   const handleSubmit = async (values: z.infer<typeof chatMessageSchema>) => {
     try {
       await createMessage({
-        conversationId,
+        conversationId: conversationId as Id<"conversations">,
         type: "text",
         content: [values.content],
       });
@@ -51,12 +52,18 @@ const ChatInput = () => {
       );
     }
   };
-  const handleInputChange = (event: any) => {
-    const { value, selectionStart } = event.target;
+  const handleInputChange = (
+    event:
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.MouseEvent<HTMLTextAreaElement>
+  ) => {
+    const target = event.target as HTMLTextAreaElement;
+    const { value, selectionStart } = target;
     if (selectionStart !== null) {
       form.setValue("content", value);
     }
   };
+
   return (
     <Card className="w-full p-2 rounded-lg relative">
       <div className="flex gap-2 items-end w-full">

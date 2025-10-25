@@ -27,7 +27,7 @@ const LeaveGroupDialog = ({ conversationId, open, setOpen }: Props) => {
   );
   const handleleaveGroup = async () => {
     try {
-      leaveGroup({ conversationId });
+      leaveGroup({ conversationId: conversationId as Id<"conversations"> });
       toast.success("Group left!");
     } catch (error) {
       toast.error(

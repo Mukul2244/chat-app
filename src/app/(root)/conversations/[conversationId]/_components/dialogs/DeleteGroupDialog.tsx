@@ -27,7 +27,7 @@ const DeleteGroupDialog = ({ conversationId, open, setOpen }: Props) => {
   );
   const handleDeleteGroup = async () => {
     try {
-      deleteGroup({ conversationId });
+      deleteGroup({ conversationId : conversationId as Id<"conversations"> });
       toast.success("Group Deleted!");
     } catch (error) {
       toast.error(

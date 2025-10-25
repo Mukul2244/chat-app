@@ -17,7 +17,7 @@ type Props = {
   members: {
     lastSeenMessageId?: Id<"messages">;
     username?: string;
-    [key: string]: any;
+    [key: string]: unknown;
   }[];
 };
 
@@ -31,11 +31,11 @@ const Body = ({ members }: Props) => {
   useEffect(() => {
     if (messages && messages.length > 0) {
       markRead({
-        conversationId,
+        conversationId: conversationId as Id<"conversations">,
         messageId: messages[0].message._id,
       });
     }
-  }, [messages?.length, conversationId, markRead]);
+  }, [messages, messages?.length, conversationId, markRead]);
 
   const formatSeenBy = (names: string[]) => {
     switch (names.length) {
