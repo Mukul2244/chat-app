@@ -29,6 +29,7 @@ const ConversationsLayout = ({ children }: Props) => {
                   name={conv.c.name || ""}
                   lastMessageSender={conv.lastMessage?.sender || ""}
                   lastMessageContent={conv.lastMessage?.content || ""}
+                  unseenCount={conv.unseenCount}
                 />
               ) : (
                 <PersonalConversationItem
@@ -38,6 +39,7 @@ const ConversationsLayout = ({ children }: Props) => {
                   imageUrl={conv.otherMember?.imageUrl || ""}
                   lastMessageSender={conv.lastMessage?.sender || ""}
                   lastMessageContent={conv.lastMessage?.content || ""}
+                  unseenCount={conv.unseenCount}
                 />
               );
             })

@@ -81,7 +81,17 @@ const ConversationPage = ({ params }: Props) => {
               ]
         }
       />
-      <Body />
+      <Body
+        members={
+          conversation.isGroup
+            ? conversation.otherMembers
+              ? conversation.otherMembers
+              : []
+            : conversation.otherMember
+              ? [conversation.otherMember]
+              : []
+        }
+      />
       <ChatInput />
     </ConversationContainer>
   );

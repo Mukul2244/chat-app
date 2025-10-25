@@ -7,6 +7,10 @@ import { api } from "../../convex/_generated/api";
 export const useNavigation = () => {
   const pathname = usePathname();
   const requestsCount = useQuery(api.requests.count);
+  const conversations = useQuery(api.conversations.get);
+  const unseenMessagesCount = useMemo(() => {
+    return conversations?.reduce((acc, conv) => acc + conv.unseenCount, 0);
+  }, []);
 
   const paths = useMemo(
     () => [
@@ -15,6 +19,7 @@ export const useNavigation = () => {
         href: "/conversations",
         icon: <MessageSquare />,
         active: pathname.startsWith("/conversations"),
+        count: unseenMessagesCount,
       },
       {
         name: "Friends",
@@ -24,7 +29,7 @@ export const useNavigation = () => {
         count: requestsCount,
       },
     ],
-    [pathname, requestsCount]
+    [pathname, requestsCount, unseenMessagesCount]
   );
   return paths;
 };

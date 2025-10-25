@@ -2,14 +2,15 @@ import React from "react";
 import { Id } from "../../../../../convex/_generated/dataModel";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { User } from "lucide-react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 
 type Props = {
   id: Id<"conversations">;
   name: string;
   lastMessageSender?: string;
   lastMessageContent?: string;
+  unseenCount: number;
 };
 
 const GroupConversationItem = ({
@@ -17,10 +18,11 @@ const GroupConversationItem = ({
   name,
   lastMessageSender,
   lastMessageContent,
+  unseenCount,
 }: Props) => {
   return (
     <Link href={`/conversations/${id}`} className="w-full">
-      <Card className="p-2 flex flex-row items-center gap-4 truncate">
+      <Card className="p-2 flex flex-row items-center justify-beetween">
         <div className="flex flex-row items-center gap-4 truncate">
           <Avatar>
             <AvatarFallback>
@@ -46,6 +48,7 @@ const GroupConversationItem = ({
             )}
           </div>
         </div>
+        {unseenCount ? <Badge>{unseenCount}</Badge> : null}
       </Card>
     </Link>
   );
