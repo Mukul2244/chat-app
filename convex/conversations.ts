@@ -23,13 +23,15 @@ export const get = query({
             }
             return conversation;
         }))
-        const conversationsWithDetails = await Promise.all(conversations?.map(async (c, idx) => {
+        const conversationsWithDetails = await Promise.all(conversations?.map(async (c) => {
             const conversationMemberships = await ctx.db.query("conversationMembers").withIndex("by_conversationId", (q) => q.eq("conversationId", c?._id)).collect();
 
-            const lastMessage = await getLastMessageDetails({ ctx, id: c?.lastMessageId })
+            const lastMessage = await getLastMessageDetails({ ctx, id: c?.lastMessageId });
+            const myMembership = conversationMemberships.find((m) => m.memberId === currentUser._id);
 
-            const lastSeenMessage = conversationMemberships[idx]?.lastSeenMessage
-                ? await ctx.db.get(conversationMemberships[idx]?.lastSeenMessage)
+
+            const lastSeenMessage = myMembership?.lastSeenMessage
+                  ? await ctx.db.get(myMembership.lastSeenMessage)
                 : null;
             const lastSeenMessageTime = lastSeenMessage ? lastSeenMessage._creationTime : -1;
 
