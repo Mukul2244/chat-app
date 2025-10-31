@@ -108,7 +108,7 @@ const CreateGroupDialog = () => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
-            className="space-y-8"
+            className="space-y-8 mt-4"
           >
             <FormField
               control={form.control}
@@ -170,13 +170,13 @@ const CreateGroupDialog = () => {
               )}
             />
             {members && members.length === 0 ? null : (
-              <Card className="flex items-start gap-3 overflow-x-auto w-full h-full p-2 no-scrollbar">
+              <Card className="flex flex-row items-start gap-3 overflow-x-auto w-full h-full p-3 no-scrollbar">
                 {friends
                   ?.filter((friend) => members.includes(friend._id))
                   .map((friend) => (
                     <div
                       key={friend._id}
-                      className="flex flex-col items-center gap-1"
+                      className="flex flex-col items-center gap-1 border border-double border-muted-3 rounded-md p-2"
                     >
                       <div className="relative">
                         <Avatar key={friend._id}>
@@ -186,7 +186,7 @@ const CreateGroupDialog = () => {
                           </AvatarFallback>
                         </Avatar>
                         <X
-                          className="text-muted-foreground w-4 h-4 absolute bottom-5 left-8 bg-muted rounded-full cursor-pointer"
+                          className="text-muted-foreground w-4 h-4 absolute bottom-5 left-6 bg-background rounded-full cursor-pointer"
                           onClick={() =>
                             form.setValue(
                               "members",

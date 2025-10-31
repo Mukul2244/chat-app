@@ -21,28 +21,33 @@ const ConversationsLayout = ({ children }: Props) => {
               No conversations found
             </p>
           ) : (
-            conversations.map((conv) => {
-              return conv.c.isGroup ? (
-                <GroupConversationItem
-                  key={conv.c._id}
-                  id={conv.c._id}
-                  name={conv.c.name || ""}
-                  lastMessageSender={conv.lastMessage?.sender || ""}
-                  lastMessageContent={conv.lastMessage?.content || ""}
-                  unseenCount={conv.unseenCount}
-                />
-              ) : (
-                <PersonalConversationItem
-                  key={conv.c._id}
-                  id={conv.c._id}
-                  username={conv.otherMember?.username || ""}
-                  imageUrl={conv.otherMember?.imageUrl || ""}
-                  lastMessageSender={conv.lastMessage?.sender || ""}
-                  lastMessageContent={conv.lastMessage?.content || ""}
-                  unseenCount={conv.unseenCount}
-                />
-              );
-            })
+            <div className="w-full h-full flex flex-col gap-2">
+              {
+              [...conversations]
+                .sort((a, b) => (b?.lastMessage?.createdAt || 0) - (a?.lastMessage?.createdAt || 0))
+                .map((conv) => {
+                  return conv.c.isGroup ? (
+                    <GroupConversationItem
+                      key={conv.c._id}
+                      id={conv.c._id}
+                      name={conv.c.name || ""}
+                      lastMessageSender={conv.lastMessage?.sender || ""}
+                      lastMessageContent={conv.lastMessage?.content || ""}
+                      unseenCount={conv.unseenCount}
+                    />
+                  ) : (
+                    <PersonalConversationItem
+                      key={conv.c._id}
+                      id={conv.c._id}
+                      username={conv.otherMember?.username || ""}
+                      imageUrl={conv.otherMember?.imageUrl || ""}
+                      lastMessageSender={conv.lastMessage?.sender || ""}
+                      lastMessageContent={conv.lastMessage?.content || ""}
+                      unseenCount={conv.unseenCount}
+                    />
+                  );
+                })}
+            </div>
           )
         ) : (
           <Loader2 />

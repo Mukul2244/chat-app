@@ -63,7 +63,8 @@ const getLastMessageDetails = async ({ ctx, id }: { ctx: QueryCtx | MutationCtx,
     const content = getMessageContent(message.type, message.content as unknown as string)
     return {
         content,
-        sender: sender.username
+        sender: sender.username,
+        createdAt: message._creationTime
     }
 }
 

@@ -21,10 +21,11 @@ const MobileNav = () => {
   return (
     <Card
       className={cn(
-        "fixed bottom-4 w-[calc(100vw-32px)] flex items-center h-16 p-2 lg:hidden",
+        "fixed bottom-0 w-[calc(100vw)] flex items-center h-16 p-2 lg:hidden",
         {
           hidden: isActive,
-        }
+        },
+        'rounded-none'
       )}
     >
       <nav className="w-full h-full">

@@ -6,10 +6,10 @@ type Props = React.PropsWithChildren<object>;
 
 const SideBarWrapper = ({ children }: Props) => {
   return (
-    <div className="h-full w-full p-4 flex flex-col lg:flex-row gap-4">
+    <div className="h-full w-full  flex flex-col lg:flex-row lg:max-w-[96rem] lg:mx-auto">
       <MobileNav />
       <DesktopNav />
-      <main className="h-[calc(100%-80px)] lg:h-full w-full flex gap-4">
+      <main className="h-[calc(100%-48px)] lg:h-full w-full flex ">
         {children}
       </main>
     </div>
